@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
+/* General Styles */
 :root {
   --primary-color: rgb(95 111 255);
   --text-color: rgb(82 82 91);
@@ -7,6 +7,7 @@
 * {
   font-family: "Outfit", sans-serif;
 }
+
 .form-label {
   font-size: 1rem;
   color: var(--text-color);
@@ -18,105 +19,45 @@
   border: 1px solid var(--primary-color);
   border-radius: 5px;
   padding: 5px;
-
 }
+
 .loginBtn:hover {
   background-color: white;
   color: var(--primary-color);
   border: 1px solid var(--primary-color);
 }
+
 .select {
   color: var(--primary-color);
 }
+
 .loginHead {
   font-size: 1.5rem;
   font-weight: 600;
   color: var(--text-color);
 }
+
 .loginPara {
   color: var(--text-color);
   font-size: 0.99rem;
 }
+
 .textColor {
   color: var(--text-color);
 }
+
 .errorMsg {
   color: #e74c3c;
   font-size: 1rem;
-  /* margin-top: 5px; */
   display: block;
 }
-.sidebar{
-  width: 300px;
-   background-color: var(--primary-color);
-}
-.sidebar.closed{
-  width: 80px;
-}
-.sidebar-header{
 
-  border-bottom: 1px solid white;
-  padding: 14px;
-
-}
-.toggle-btn{
-  padding: 5px;
-  background: none;
-  border: none;
-}
-.toggle-btn .arrow{
-  width: 0;
-  height: 0;
-  border-style: solid;
-}
-.toggle-btn .left{
-  border-width:8px 10px 8px 0;
-  border-color:transparent white transparent transparent;
-}
-.toggle-btn .right{
-  border-width: 8px 0 8px 10px;
-  border-color: transparent transparent transparent white;
-}
-.nav-menu ul li{
-  padding: 15px 20px;
-  list-style: none;
-  margin-top: 12px;
-}
-.nav-menu ul li a{
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  font-size: 1.1rem;
- color: white;
- margin-left: 15px;
-}
-.nav-menu ul li a:hover,
-.nav-menu ul li a.active {
-  background: white;
-  color: var(--primary-color);
-  text-align: center;
-  padding: 5px;
-  border: 1px solid white;
-  border-radius: 5px;
-}
-
-  .nav-menu ul li a:hover{
-  
-    background: white;
-    
-    color: var(--primary-color);
-    text-align: center;
-    padding: 5px;
-    border: 1px solid white;
-    border-radius: 5px;
-    transition: 0.8 ease-in;
-  }
-
-.table_heading{
+.table_heading {
   background-color: var(--primary-color) !important;
   color: white !important;
 }
-.addField{
+
+.addField {
   background-color: transparent;
   width: 100%;
   border: 1px solid var(--primary-color);
@@ -124,4 +65,90 @@
   font-weight: 400;
   color: var(--primary-color);
   border-radius: 5px;
+}
+
+.sidebar {
+  width: 22%;
+  background-color: violet;
+  color: #fff;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  transition: width 0.3s ease;
+  position: relative;
+}
+
+.sidebar-header {
+  border-bottom: 1px solid white;
+  padding: 14px;
+}
+
+.nav-menu ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.nav-menu ul li {
+  padding: 15px 20px;
+  margin-top: 12px;
+}
+
+.nav-menu ul li a {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  font-size: 1.1rem;
+  color: black;
+  margin-left: 15px;
+  background-color: rgb(224, 220, 248);
+  border: 1px solid rgb(224, 220, 248);
+  width: fit-content;
+  padding: 5px 20px;
+  border-radius: 5px;
+}
+
+.nav-menu ul li a:hover,
+.nav-menu ul li a.active {
+  background: white;
+  color: var(--primary-color);
+  text-align: center;
+  padding: 5px 20px;
+  border: 1px solid white;
+  border-radius: 5px;
+  transition: 0.3s ease;
+  width: fit-content;
+}
+
+.sidebar .nav-menu ul li a:hover {
+  background: white;
+  color: var(--primary-color);
+  border: 1px solid white;
+  transition: 0.3s ease;
+}
+.no-data-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 1.3rem;
+  color: var(--primary-color);
+  padding: 20px;
+  background-color: rgba(156, 164, 236, 0.23);
+  border: 1px solid rgba(156, 164, 236, 0.23);
+  border-radius: 5px;
+  margin-top: 20px;
+  width: 100%;
+  min-height: 100px;
+}
+.billButton{
+  background-color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  color: white;
+  width: fit-content;
+  padding: 6px 20px;
+  border-radius: 5px;
+}
+.billButton:hover{
+  color: var(--primary-color);
+  background-color: transparent;
 }

@@ -4,12 +4,12 @@ import { CiReceipt } from "react-icons/ci";
 export const SideBarData = [
   {
     title: 'CUSTOMER LIST',
-    path: '#customerlist',
+    path: "/sidebar/customerlist",
     // icon: <FaList />
   },
   {
     title: 'BILL GENERATOR',
-    path: '#billgenerator',
+    path: "/sidebar/billgenerator",
     // icon: <CiReceipt />
   }
 ];

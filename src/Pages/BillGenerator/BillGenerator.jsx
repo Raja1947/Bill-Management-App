@@ -1,5 +1,10 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { addUser } from "../../store/slice";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
+import { jsPDF } from "jspdf";
 
 function BillGenerator() {
   const [formData, setFormData] = useState({
@@ -16,21 +21,75 @@ function BillGenerator() {
 
   const [showFields, setShowFields] = useState(false);
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const handleAddField = (event) => {
     event.preventDefault();
     setShowFields(true);
   };
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
+    const { name, value } = e.target;
+    setFormData((prevData) => {
+      const updatedData = { ...prevData, [name]: value };
+
+      if (name === "quantity" || name === "billingPrice") {
+        const quantity = parseFloat(updatedData.quantity) || 0;
+        const billingPrice = parseFloat(updatedData.billingPrice) || 0;
+        updatedData.totalPrice = (quantity * billingPrice).toFixed(2);
+      }
+
+      return updatedData;
     });
   };
 
- 
+  const handleDispatch = () => {
+    dispatch(addUser(formData));
+
+    toast.success("Bill Submitted Successfully!", {
+      position: "top-right",
+      autoClose: 1000,
+    });
+
+    setFormData({
+      clientName: "",
+      mobileNumber: "",
+      description: "",
+      billingDate: "",
+      address: "",
+      item: "",
+      quantity: "",
+      billingPrice: "",
+      totalPrice: "",
+    });
+
+    setTimeout(() => {
+      navigate("/sidebar/customerlist");
+    }, 1200);
+  };
+
+  const generateInvoice = () => {
+    const doc = new jsPDF();
+
+    doc.text("Invoice", 105, 20, null, null, "center");
+    doc.text(`Client Name: ${formData.clientName}`, 20, 40);
+    doc.text(`Mobile Number: ${formData.mobileNumber}`, 20, 50);
+    doc.text(`Billing Date: ${formData.billingDate}`, 20, 60);
+    doc.text(`Description: ${formData.description}`, 20, 70);
+    doc.text(`Address: ${formData.address}`, 20, 80);
+
+    doc.text("Item Details", 20, 100);
+    doc.text(`Item: ${formData.item}`, 20, 110);
+    doc.text(`Quantity: ${formData.quantity}`, 20, 120);
+    doc.text(`Billing Price: Rs. ${formData.billingPrice}`, 20, 130);
+    doc.text(`Total Price: Rs. ${formData.totalPrice}`, 20, 140);
+
+    doc.save(`${formData.clientName}_Invoice.pdf`);
+  };
+
   return (
-    <div className="container my-2 w-50 text-light">
+    <div className="container my-2 w-100 text-light">
       <form className="row g-3 p-3">
         <div className="col-md-6">
           <label htmlFor="clientName" className="form-label">
@@ -101,12 +160,8 @@ function BillGenerator() {
           />
         </div>
         <div className="col-12">
-          <button
-            type="button"
-            className="addField"
-            onClick={handleAddField}
-          >
-          + Add Field
+          <button type="button" className="addField" onClick={handleAddField}>
+            + Add Field
           </button>
         </div>
 
@@ -130,7 +185,7 @@ function BillGenerator() {
                 Quantity
               </label>
               <input
-                type="text"
+                type="number"
                 className="form-control"
                 id="quantity"
                 name="quantity"
@@ -145,7 +200,7 @@ function BillGenerator() {
               <div className="input-group">
                 <div className="input-group-text">Rs.</div>
                 <input
-                  type="text"
+                  type="number"
                   className="form-control"
                   id="billingPrice"
                   name="billingPrice"
@@ -166,23 +221,28 @@ function BillGenerator() {
                   id="totalPrice"
                   name="totalPrice"
                   value={formData.totalPrice}
-                  onChange={handleChange}
+                  readOnly
                 />
               </div>
             </div>
           </>
         )}
 
-        <div className="col-12">
+        <div className="col-12 d-flex gap-3 mt-4">
+          <button type="button" className="billButton" onClick={handleDispatch}>
+            Submit
+          </button>
           <button
             type="button"
-            className="btn btn-primary"
-            
+            className="billButton"
+            onClick={generateInvoice}
           >
             Download Invoice
           </button>
         </div>
       </form>
+
+      <ToastContainer />
     </div>
   );
 }
